@@ -95,7 +95,7 @@ def main():
     if args["--cloudflare"] or args["cloudflare"] and cloudflare_loaded:
         cf = CloudFlare.CloudFlare(debug=debug)
         zones = getcfzoneinfo(cf, addr)
-        if not zones[0]['name'] is not addr:
+        if not zones:
             print("Not managed by cloudflare. Bailing.")
             return -1
         if args["--info"]:
