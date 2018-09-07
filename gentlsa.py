@@ -3,11 +3,9 @@
 Tool for TLSA/DANE
 
 Usage:
-    gentlsahash.py host <name> <port> [--info] [--cloudflare] [--dryrun]
-    gentlsahash.py cloudflare [--info] [--listzones]
-    gentlsahash.py file <certfile>
-
-
+    gentlsa.py host <name> <port> [--info] [--cloudflare] [--dryrun]
+    gentlsa.py cloudflare [--info] [--listzones]
+    gentlsa.py file <certfile>
 """
 
 import sys

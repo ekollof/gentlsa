@@ -5,10 +5,11 @@ Simple tool for dealing with TSLA records. Also displays info for certificates. 
 ## Usage
 ```
 ./gentlsa.py
+
 Usage:
-    gentlsahash.py host <name> <port> [--info] [--cloudflare] [--dryrun]
-    gentlsahash.py cloudflare [--info] [--listzones]
-    gentlsahash.py file <certfile>
+    gentlsa.py host <name> <port> [--info] [--cloudflare] [--dryrun]
+    gentlsa.py cloudflare [--info] [--listzones]
+    gentlsa.py file <certfile>
 ```
 
 ### Example output:
@@ -17,13 +18,13 @@ Generating TLSA entry:
 
 ```
 ┌─[ekollof@elrond]─(~/Code/gentlsa)(master U:2 ?:1 ✗)
-└─[15:39]-(%)-[$] ./gentlsahash.py host coolvibe.org 443
+└─[15:39]-(%)-[$] ./gentlsa.py host coolvibe.org 443
 _443._tcp TLSA 3 1 1 8adbc769e05014c8e0b431770f97e1f09659c5a6eae9f5683701bc6f071d8a94
 ```
 Display cert info:
 ```
 ┌─[ekollof@elrond]─(~/Code/gentlsa)(master S:4 U:3 ?:1 ✗)
-└─[15:47]-(%)-[$] ./gentlsahash.py host coolvibe.org 443 --info
+└─[15:47]-(%)-[$] ./gentlsa.py host coolvibe.org 443 --info
 >>> Certificate Information:
 Serial : 4906ded898ec441cbbc223acb960a95239a
 Issuer : C=US, O=Let's Encrypt, CN=Let's Encrypt Authority X3
