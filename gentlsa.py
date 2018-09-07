@@ -73,15 +73,12 @@ def printcertinfo(certobj, showinfo):
 
 
 def getcfzonelist(cf):
-    ret = {}
     zonedata = cf.zones.get()
     return zonedata
 
 
 def getcfzoneinfo(cf, zonename):
-    ret = {}
     zonedata = cf.zones.get(params={'name': zonename})
-
     return zonedata
 
 
@@ -108,7 +105,7 @@ def main():
                 print(f"Name servers: {zones[0]['name_servers']}")
         else:
             print("Please install the cloudflare module for this to work.")
-            return(-1)
+            return -1
 
     if args["host"]:
         certobj = getcerthttps(addr, port)
@@ -116,7 +113,7 @@ def main():
 
     if args['file']:
         certobj = getcertfile(args['<certfile>'])
-        printcertinfo(certobj)
+        printcertinfo(certobj, args['--info'])
 
 
 if __name__ == '__main__':

@@ -1,0 +1,18 @@
+<component name="ProjectDictionaryState">
+  <dictionary name="ekollof">
+    <words>
+      <w>addr</w>
+      <w>certobj</w>
+      <w>checkcloudflare</w>
+      <w>cloudflare</w>
+      <w>getcertfile</w>
+      <w>getcerthttps</w>
+      <w>getcertpubhash</w>
+      <w>getcfzoneinfo</w>
+      <w>getcfzonelist</w>
+      <w>printcertinfo</w>
+      <w>pubkeyhash</w>
+      <w>zonedata</w>
+    </words>
+  </dictionary>
+</component>
