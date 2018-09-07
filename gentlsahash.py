@@ -53,22 +53,25 @@ def getcertpubhash(certobj):
     return pubkeyhash
 
 
-def printcertinfo(certobj):
-    print(">>> Certificate Information:")
-    print(f"Serial : {certobj.get_serial_number():x}")
-    print(f"Issuer : {certobj.get_issuer().as_text()}")
-    print(f"Subject: {certobj.get_subject().as_text()}")
-    try:
-        san = certobj.get_ext('subjectAltName')
-        print("Subject Alternative Name(s): %s" % san.get_value())
-    except LookupError:
-        pass
+def printcertinfo(certobj, showinfo):
 
-    sig_start = certobj.get_not_before().get_datetime()
-    sig_end = certobj.get_not_after().get_datetime()
-    print(f"Certificate Inception:  {sig_start} {sig_start.tzname()}")
-    print(f"Certificate Expiration: {sig_end} {sig_end.tzname()}")
-    print(f"_443._tcp TLSA 3 1 1 {getcertpubhash(certobj)}")
+        if showinfo:
+            print(">>> Certificate Information:")
+            print(f"Serial : {certobj.get_serial_number():x}")
+            print(f"Issuer : {certobj.get_issuer().as_text()}")
+            print(f"Subject: {certobj.get_subject().as_text()}")
+            try:
+                san = certobj.get_ext('subjectAltName')
+                print("Subject Alternative Name(s): %s" % san.get_value())
+            except LookupError:
+                pass
+
+            sig_start = certobj.get_not_before().get_datetime()
+            sig_end = certobj.get_not_after().get_datetime()
+            print(f"Certificate Inception:  {sig_start} {sig_start.tzname()}")
+            print(f"Certificate Expiration: {sig_end} {sig_end.tzname()}")
+
+        print(f"_443._tcp TLSA 3 1 1 {getcertpubhash(certobj)}")
 
 
 def getcfzonelist(cf):
@@ -107,7 +110,7 @@ def main():
 
     if args["host"]:
         certobj = getcerthttps(addr, port)
-        printcertinfo(certobj)
+        printcertinfo(certobj, args['--info'])
 
     if args['file']:
         certobj = getcertfile(args['<certfile>'])
