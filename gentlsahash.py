@@ -68,7 +68,7 @@ def printcertinfo(certobj):
     sig_end = certobj.get_not_after().get_datetime()
     print(f"Certificate Inception:  {sig_start} {sig_start.tzname()}")
     print(f"Certificate Expiration: {sig_end} {sig_end.tzname()}")
-    print(f"SHA256 (pubkey): {getcertpubhash(certobj)}")
+    print(f"_443._tcp TLSA 3 1 1 {getcertpubhash(certobj)}")
 
 
 def getcfzonelist(cf):
@@ -110,7 +110,6 @@ def main():
         printcertinfo(certobj)
 
     if args['file']:
-        pprint(args)
         certobj = getcertfile(args['<certfile>'])
         printcertinfo(certobj)
 
