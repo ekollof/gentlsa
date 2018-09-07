@@ -14,12 +14,22 @@ import sys
 import ssl
 import hashlib
 import M2Crypto
-import CloudFlare
+
+try:
+    import CloudFlare
+except:
+    pass
 
 from docopt import docopt
 from pprint import pprint
 
 debug = False
+
+
+def checkcloudflare():
+    if "CloudFlare" in sys.modules:
+        return True
+    return False
 
 
 def getcerthttps(addr, port):
@@ -30,6 +40,10 @@ def getcerthttps(addr, port):
     response = M2Crypto.X509.load_cert_string(pem_cert)
 
     return response
+
+
+def getcertfile(filename):
+    return M2Crypto.X509.load_cert(filename)
 
 
 def getcertpubhash(certobj):
@@ -76,7 +90,9 @@ def main():
     addr = args['<name>']
     port = args['<port>']
 
-    if args["--cloudflare"] or args["cloudflare"]:
+    cloudflare_loaded = checkcloudflare()
+
+    if args["--cloudflare"] or args["cloudflare"] and cloudflare_loaded:
         cf = CloudFlare.CloudFlare(debug=debug)
         zones = getcfzoneinfo(cf, addr)
         if not zones[0]['name'] is not addr:
@@ -89,8 +105,14 @@ def main():
             print(f"Zone owner: {zones[0]['owner']['email']}")
             print(f"Name servers: {zones[0]['name_servers']}")
 
-    certobj = getcerthttps(addr, port)
-    printcertinfo(certobj)
+    if args["host"]:
+        certobj = getcerthttps(addr, port)
+        printcertinfo(certobj)
+
+    if args['file']:
+        pprint(args)
+        certobj = getcertfile(args['<certfile>'])
+        printcertinfo(certobj)
 
 
 if __name__ == '__main__':
