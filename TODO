@@ -1,0 +1,5 @@
+- Apply TLSA to cloudflare zones
+  -  Check if TLSA exists, check if valid. Update when needed
+- Verify TLSA record
+- Check TLA cert expiry
+- List/Check CloudFlare zones

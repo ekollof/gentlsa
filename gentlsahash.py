@@ -17,7 +17,7 @@ import M2Crypto
 
 try:
     import CloudFlare
-except:
+except ImportError:
     pass
 
 from docopt import docopt
@@ -95,18 +95,22 @@ def main():
 
     cloudflare_loaded = checkcloudflare()
 
-    if args["--cloudflare"] or args["cloudflare"] and cloudflare_loaded:
-        cf = CloudFlare.CloudFlare(debug=debug)
-        zones = getcfzoneinfo(cf, addr)
-        if not zones:
-            print("Not managed by cloudflare. Bailing.")
-            return -1
-        if args["--info"]:
-            print(">>> Cloudflare Information:")
-            print(f"Zone name: {addr}")
-            print(f"Zone ID: {zones[0]['id']}")
-            print(f"Zone owner: {zones[0]['owner']['email']}")
-            print(f"Name servers: {zones[0]['name_servers']}")
+    if args["--cloudflare"] or args["cloudflare"]:
+        if cloudflare_loaded:
+            cf = CloudFlare.CloudFlare(debug=debug)
+            zones = getcfzoneinfo(cf, addr)
+            if not zones:
+                print("Not managed by cloudflare. Bailing.")
+                return -1
+            if args["--info"]:
+                print(">>> Cloudflare Information:")
+                print(f"Zone name: {addr}")
+                print(f"Zone ID: {zones[0]['id']}")
+                print(f"Zone owner: {zones[0]['owner']['email']}")
+                print(f"Name servers: {zones[0]['name_servers']}")
+        else:
+            print("Please install the cloudflare module for this to work.")
+            return(-1)
 
     if args["host"]:
         certobj = getcerthttps(addr, port)
