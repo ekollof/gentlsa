@@ -7,7 +7,8 @@ Simple tool for dealing with TSLA records. Also displays info for certificates. 
 ./gentlsa.py
 
 Usage:
-    gentlsa.py host <name> <port> [--info] [--cloudflare] [--dryrun]
+    gentlsa.py generate <zone> <port> [--hostname <shorthost>] [--info] [--cloudflare] [--dryrun]
+    gentlsa.py verify <name> <port>
     gentlsa.py cloudflare [--info] [--listzones]
     gentlsa.py file <certfile>
 ```
