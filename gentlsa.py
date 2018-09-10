@@ -23,7 +23,7 @@ except ImportError:
 from docopt import docopt
 from pprint import pprint
 
-debug = True
+debug = False
 
 
 def checkcloudflare():
