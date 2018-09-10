@@ -51,8 +51,8 @@ Certificate Expiration: 2018-11-30 03:16:37+00:00 UTC
 _25._tcp.mx TLSA 3 1 1 e4a76ab909941a470314f4a4fcc9338623dd619ab9f5ac715a08fe9b94417d8c
 >>> Cloudflare Information:
 Zone name: hackerheaven.org
-Zone ID: 4e386e5267924eea6a8150f0a2f99c80
-Zone owner: emiel.kollof@gmail.com
+Zone ID: REDACTED
+Zone owner: REDACTED
 Name servers: ['isla.ns.cloudflare.com', 'jake.ns.cloudflare.com']
 Cloudflare: TLSA record updated for hackerheaven.org
 ```
