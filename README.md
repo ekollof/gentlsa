@@ -57,6 +57,21 @@ Name servers: ['isla.ns.cloudflare.com', 'jake.ns.cloudflare.com']
 Cloudflare: TLSA record updated for hackerheaven.org
 ```
 
+## Cloudflare support
+
+Create a file in your home directory with the path: `~/.cloudflare/cloudflare.cfg`
+
+Add the following info in it (it's available on the bottom on your account profile page):
+
+```
+[CloudFlare]
+email = <cloudflare login (e-mail)>
+token = <token>
+certtoken = <certtoken>
+
+```
+
+You can also use environment variables. See here: [https://github.com/cloudflare/python-cloudflare]
 
 ## TODO:
 
