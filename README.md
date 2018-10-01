@@ -8,7 +8,7 @@ Simple tool for dealing with DANE/TSLA records. Also displays info for certifica
 
 Usage:
     gentlsa.py generate <zone> <port> [--hostname <shorthost>] [--info] [--cloudflare] [--dryrun]
-    gentlsa.py verify <name> <port>
+    gentlsa.py verify <name> <port> [--hostname <shorthost>]
     gentlsa.py cloudflare [--info] [--listzones]
     gentlsa.py file <certfile>
 ```
@@ -56,6 +56,8 @@ Zone owner: REDACTED
 Name servers: ['isla.ns.cloudflare.com', 'jake.ns.cloudflare.com']
 Cloudflare: TLSA record updated for hackerheaven.org
 ```
+
+Verify a TLSA record (Nagios compatible, returns 0 on success, 2 on faillure)
 
 ## Cloudflare support
 

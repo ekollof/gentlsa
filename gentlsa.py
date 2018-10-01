@@ -34,12 +34,17 @@ def checkcloudflare():
 
 
 def getcerthttps(addr, port):
-    conn = ssl.create_connection((addr, port))
-    ctx = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    sock = ctx.wrap_socket(conn, server_hostname=addr)  # SNI
-    pem_cert = ssl.DER_cert_to_PEM_cert(sock.getpeercert(True))
-    response = M2Crypto.X509.load_cert_string(pem_cert)
-    return response
+    try:
+        conn = ssl.create_connection((addr, port))
+        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS)
+        sock = ctx.wrap_socket(conn, server_hostname=addr)  # SNI
+        pem_cert = ssl.DER_cert_to_PEM_cert(sock.getpeercert(True))
+        response = M2Crypto.X509.load_cert_string(pem_cert)
+        return response
+    except Exception as ex:
+        print(f"Exception: Connection error: {ex}")
+        return None
+
 
 
 def getsmtpcert(addr, port):
@@ -62,10 +67,12 @@ def getcertpubhash(certobj):
     :param certobj:
     :return:
     """
-    pubkey = certobj.get_pubkey().as_der()
-    pubkeyhash = hashlib.sha256(pubkey).hexdigest()
-
-    return pubkeyhash
+    if certobj:
+        pubkey = certobj.get_pubkey().as_der()
+        pubkeyhash = hashlib.sha256(pubkey).hexdigest()
+        return pubkeyhash
+    else:
+        return None
 
 
 def getcerthash(certobj):
@@ -249,14 +256,18 @@ def main():
         else:
             certobj = getsmtpcert(connhost, port)
         hosthash = getcertpubhash(certobj)
-        dnshash = rr.to_text().split()[3]
-        if hosthash == dnshash:
-            print("OK - TLSA is valid")
-            return 0
-        else:
-            print(f"ERROR - TLSA invalid: {hosthash} != {dnshash}")
-            return 2
+        dnshash = rr
 
+        if dnshash and hosthash:
+            if hosthash == dnshash.to_text().split()[3]:
+                print("OK - TLSA is valid")
+                return 0
+            else:
+                print(f"ERROR - TLSA invalid: {hosthash} != {dnshash}")
+                return 2
+        else:
+            print("UNKNOWN - Something went wrong. Check logs")
+            return 3
 
 
 
