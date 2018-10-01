@@ -4,13 +4,14 @@ Tool for TLSA/DANE
 
 Usage:
     gentlsa.py generate <zone> <port> [--hostname <shorthost>] [--info] [--cloudflare] [--dryrun]
-    gentlsa.py verify <name> <port>
-    gentlsa.py cloudflare [--info] [--listzones]
+    gentlsa.py verify <zone> <port> [--hostname <shorthost>] [--info]
+    gentlsa.py cloudflare [--info] [--listzones] # not implemented yet
     gentlsa.py file <certfile>
 """
 
 import sys
 import ssl
+import dns.resolver
 import smtplib
 import hashlib
 import M2Crypto
@@ -56,10 +57,27 @@ def getcertfile(filename):
 
 
 def getcertpubhash(certobj):
+    """
+    Method 1: Hash from public key
+    :param certobj:
+    :return:
+    """
     pubkey = certobj.get_pubkey().as_der()
     pubkeyhash = hashlib.sha256(pubkey).hexdigest()
 
     return pubkeyhash
+
+
+def getcerthash(certobj):
+    """
+    Method 0: Hash from cert
+    :param certobj:
+    :return:
+    """
+    cert = certobj.as_der()
+    certhash = hashlib.sha256(cert).hexdigest()
+
+    return certhash
 
 
 def printcertinfo(certobj, hostname, portnumber, showinfo):
@@ -153,6 +171,25 @@ def createcftlsa(cf, zonename, zoneid, host, port, tlsarec):
     return False  # we shouldn't even get here.
 
 
+def gettlsa(zonename, hostname, port):
+
+    rr = ""
+    if hostname:
+        rr = f"_{port}._tcp.{hostname}"
+    else:
+        rr = f"_{port}._tcp"
+
+    try:
+        answers = dns.resolver.query(f"{rr}.{zonename}", "TLSA")
+        return answers[0]
+    except Exception as ex:
+        print(f"Exception occured: {ex}")
+        return None
+
+
+
+
+
 def main():
     args = docopt(__doc__)
 
@@ -202,9 +239,31 @@ def main():
             print("Please install the cloudflare module for this to work.")
             return -1
 
+    if args['verify']:
+        # What's in DNS?
+        rr = gettlsa(zonename, hostname, port)
+        # What does the server report:
+        certobj = None
+        if int(port) != 25:
+            certobj = getcerthttps(connhost, port)
+        else:
+            certobj = getsmtpcert(connhost, port)
+        hosthash = getcertpubhash(certobj)
+        dnshash = rr.to_text().split()[3]
+        if hosthash == dnshash:
+            print("OK - TLSA is valid")
+            return 0
+        else:
+            print(f"ERROR - TLSA invalid: {hosthash} != {dnshash}")
+            return 2
+
+
+
+
     if args['file']:
         certobj = getcertfile(args['<certfile>'])
         printcertinfo(certobj, port, args['--info'])
+
 
 
 if __name__ == '__main__':
