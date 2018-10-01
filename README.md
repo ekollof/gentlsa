@@ -57,7 +57,12 @@ Name servers: ['isla.ns.cloudflare.com', 'jake.ns.cloudflare.com']
 Cloudflare: TLSA record updated for hackerheaven.org
 ```
 
-Verify a TLSA record (Nagios compatible, returns 0 on success, 2 on faillure)
+Verify a TLSA record (Nagios compatible, returns 0 on success, 2 on faillure). This compares what's in DNS and what your servers seem to report:
+```
+┌─[ekollof@elrond]─(~/Code/gentlsa)(master U:1 ?:1 ✗)
+└─[15:43]-(%)-[$] ./gentlsa.py verify hackerheaven.org 443
+OK - TLSA is valid
+```
 
 ## Cloudflare support
 

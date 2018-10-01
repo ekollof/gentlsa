@@ -2,17 +2,27 @@
   <dictionary name="ekollof">
     <words>
       <w>addr</w>
+      <w>certfile</w>
+      <w>certhash</w>
       <w>certobj</w>
       <w>checkcloudflare</w>
       <w>cloudflare</w>
+      <w>createcftlsa</w>
+      <w>dnshash</w>
       <w>getcertfile</w>
       <w>getcerthttps</w>
       <w>getcertpubhash</w>
       <w>getcfzoneinfo</w>
       <w>getcfzonelist</w>
+      <w>gettlsa</w>
+      <w>hosthash</w>
+      <w>portnumber</w>
       <w>printcertinfo</w>
       <w>pubkeyhash</w>
+      <w>shorthost</w>
+      <w>tlsa</w>
       <w>zonedata</w>
+      <w>zonename</w>
     </words>
   </dictionary>
 </component>

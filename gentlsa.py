@@ -46,7 +46,6 @@ def getcerthttps(addr, port):
         return None
 
 
-
 def getsmtpcert(addr, port):
     serv = smtplib.SMTP(addr, port=port)
     ctx = ssl.SSLContext(ssl.PROTOCOL_TLS)
@@ -179,7 +178,6 @@ def createcftlsa(cf, zonename, zoneid, host, port, tlsarec):
 
 
 def gettlsa(zonename, hostname, port):
-
     rr = ""
     if hostname:
         rr = f"_{port}._tcp.{hostname}"
@@ -192,9 +190,6 @@ def gettlsa(zonename, hostname, port):
     except Exception as ex:
         print(f"Exception occured: {ex}")
         return None
-
-
-
 
 
 def main():
@@ -250,7 +245,6 @@ def main():
         # What's in DNS?
         rr = gettlsa(zonename, hostname, port)
         # What does the server report:
-        certobj = None
         if int(port) != 25:
             certobj = getcerthttps(connhost, port)
         else:
@@ -269,12 +263,9 @@ def main():
             print("UNKNOWN - Something went wrong. Check logs")
             return 3
 
-
-
     if args['file']:
         certobj = getcertfile(args['<certfile>'])
         printcertinfo(certobj, port, args['--info'])
-
 
 
 if __name__ == '__main__':
