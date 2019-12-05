@@ -1,6 +1,8 @@
 # GenTLSA
 
-Simple tool for dealing with DANE/TSLA records. Also displays info for certificates. Also has optional CloudFlare support. 
+Simple tool for dealing with DANE/TSLA records. Also displays info for certificates. Also has optional CloudFlare support.
+
+**NOTE:** This script does **NOT** work with python 2. You shouldn't be using python 2 anyway.
 
 ## Usage
 ```
