@@ -211,7 +211,7 @@ def main():
     if args["generate"]:
         if debug:
             print(f"Getting cert from {connhost}")
-        if int(port) != 25:
+        if int(port) != 25 and int(port) != 587:
             certobj = getcerthttps(connhost, port)
         else:
             certobj = getsmtpcert(connhost, port)
@@ -245,7 +245,7 @@ def main():
         # What's in DNS?
         rr = gettlsa(zonename, hostname, port)
         # What does the server report:
-        if int(port) != 25:
+        if int(port) != 25 and int(port) != 587:
             certobj = getcerthttps(connhost, port)
         else:
             certobj = getsmtpcert(connhost, port)
