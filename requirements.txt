@@ -1,4 +1,4 @@
 cloudflare==2.8.14
 docopt==0.6.2
 M2Crypto==0.37.1
-dnspython==1.15.0
+dnspython==2.0.0
