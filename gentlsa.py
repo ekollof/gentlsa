@@ -36,7 +36,9 @@ def checkcloudflare():
 def getcerthttps(addr, port):
     try:
         conn = ssl.create_connection((addr, port))
-        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS)
+        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
         sock = ctx.wrap_socket(conn, server_hostname=addr)  # SNI
         pem_cert = ssl.DER_cert_to_PEM_cert(sock.getpeercert(True))
         response = M2Crypto.X509.load_cert_string(pem_cert)
@@ -48,7 +50,9 @@ def getcerthttps(addr, port):
 
 def getsmtpcert(addr, port):
     serv = smtplib.SMTP(addr, port=port)
-    ctx = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE    
     serv.starttls(context=ctx)
     der = serv.sock.getpeercert(True)
     pem = ssl.DER_cert_to_PEM_cert(der)
