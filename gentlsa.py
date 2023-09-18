@@ -189,7 +189,7 @@ def gettlsa(zonename, hostname, port):
         rr = f"_{port}._tcp"
 
     try:
-        answers = dns.resolver.query(f"{rr}.{zonename}", "TLSA")
+        answers = dns.resolver.resolve(f"{rr}.{zonename}", "TLSA")
         return answers[0]
     except Exception as ex:
         print(f"Exception occured: {ex}")
